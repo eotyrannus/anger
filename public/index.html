@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anger - Task Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Anger</h1>
+    <p class="subtitle">Task Tracker</p>
+  </header>
+
+  <nav id="nav">
+    <button class="nav-btn active" data-view="boards">Boards</button>
+    <button class="nav-btn" data-view="sprints">Sprints</button>
+    <button class="nav-btn" data-view="issues">Issues</button>
+  </nav>
+
+  <main id="app">
+    <!-- Boards View -->
+    <section id="boards-view" class="view active">
+      <div class="view-header">
+        <h2>Boards</h2>
+        <button class="btn-primary" onclick="showModal('board-modal')">+ New Board</button>
+      </div>
+      <div id="boards-list" class="cards"></div>
+    </section>
+
+    <!-- Sprints View -->
+    <section id="sprints-view" class="view">
+      <div class="view-header">
+        <h2>Sprints</h2>
+        <button class="btn-primary" onclick="showModal('sprint-modal')">+ New Sprint</button>
+      </div>
+      <div class="filter-bar">
+        <label>Board: <select id="sprint-board-filter" onchange="loadSprints()"><option value="">All</option></select></label>
+      </div>
+      <div id="sprints-list" class="cards"></div>
+    </section>
+
+    <!-- Issues View -->
+    <section id="issues-view" class="view">
+      <div class="view-header">
+        <h2>Issues</h2>
+        <button class="btn-primary" onclick="showModal('issue-modal')">+ New Issue</button>
+      </div>
+      <div class="filter-bar">
+        <label>Board: <select id="issue-board-filter" onchange="onIssueBoardFilterChange()"><option value="">All</option></select></label>
+        <label>Sprint: <select id="issue-sprint-filter" onchange="loadIssues()"><option value="">All</option></select></label>
+        <label>Status: <select id="issue-status-filter" onchange="loadIssues()">
+          <option value="">All</option>
+          <option value="todo">To Do</option>
+          <option value="in_progress">In Progress</option>
+          <option value="done">Done</option>
+        </select></label>
+      </div>
+      <div id="kanban-board" class="kanban">
+        <div class="kanban-col">
+          <h3>To Do</h3>
+          <div id="kanban-todo" class="kanban-items"></div>
+        </div>
+        <div class="kanban-col">
+          <h3>In Progress</h3>
+          <div id="kanban-in_progress" class="kanban-items"></div>
+        </div>
+        <div class="kanban-col">
+          <h3>Done</h3>
+          <div id="kanban-done" class="kanban-items"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Board Modal -->
+  <div id="board-modal" class="modal">
+    <div class="modal-content">
+      <h3 id="board-modal-title">New Board</h3>
+      <input type="hidden" id="board-id">
+      <label>Name <input type="text" id="board-name" required></label>
+      <label>Description <textarea id="board-desc"></textarea></label>
+      <div class="modal-actions">
+        <button class="btn-secondary" onclick="hideModal('board-modal')">Cancel</button>
+        <button class="btn-primary" onclick="saveBoard()">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sprint Modal -->
+  <div id="sprint-modal" class="modal">
+    <div class="modal-content">
+      <h3 id="sprint-modal-title">New Sprint</h3>
+      <input type="hidden" id="sprint-id">
+      <label>Board <select id="sprint-board" required></select></label>
+      <label>Name <input type="text" id="sprint-name" required></label>
+      <label>Goal <textarea id="sprint-goal"></textarea></label>
+      <label>Start Date <input type="date" id="sprint-start"></label>
+      <label>End Date <input type="date" id="sprint-end"></label>
+      <label>Status <select id="sprint-status">
+        <option value="planning">Planning</option>
+        <option value="active">Active</option>
+        <option value="completed">Completed</option>
+      </select></label>
+      <div class="modal-actions">
+        <button class="btn-secondary" onclick="hideModal('sprint-modal')">Cancel</button>
+        <button class="btn-primary" onclick="saveSprint()">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Issue Modal -->
+  <div id="issue-modal" class="modal">
+    <div class="modal-content">
+      <h3 id="issue-modal-title">New Issue</h3>
+      <input type="hidden" id="issue-id">
+      <label>Board <select id="issue-board" required onchange="loadSprintsForIssue()"></select></label>
+      <label>Sprint <select id="issue-sprint"><option value="">Backlog (no sprint)</option></select></label>
+      <label>Title <input type="text" id="issue-title" required></label>
+      <label>Description <textarea id="issue-desc"></textarea></label>
+      <label>Priority <select id="issue-priority">
+        <option value="low">Low</option>
+        <option value="medium" selected>Medium</option>
+        <option value="high">High</option>
+        <option value="critical">Critical</option>
+      </select></label>
+      <label>Status <select id="issue-status">
+        <option value="todo">To Do</option>
+        <option value="in_progress">In Progress</option>
+        <option value="done">Done</option>
+      </select></label>
+      <label>Assignee <input type="text" id="issue-assignee"></label>
+      <div class="modal-actions">
+        <button class="btn-secondary" onclick="hideModal('issue-modal')">Cancel</button>
+        <button class="btn-primary" onclick="saveIssue()">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
