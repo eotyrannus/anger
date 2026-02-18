@@ -1,0 +1,17 @@
+{
+  "name": "anger",
+  "version": "1.0.0",
+  "description": "A simple task tracking app with issues, boards, and sprints",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test src/tests/*.test.js"
+  },
+  "keywords": ["task-tracking", "issues", "boards", "sprints"],
+  "license": "MIT",
+  "dependencies": {
+    "better-sqlite3": "^11.7.0",
+    "express": "^4.21.0"
+  }
+}
