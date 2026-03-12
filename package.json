@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
-    "test": "node --test src/tests/*.test.js"
+    "test": "node --test src/tests/*.test.js",
+    "scrape": "node scripts/scrape-marketplace.js"
   },
   "keywords": ["task-tracking", "issues", "boards", "sprints"],
   "license": "MIT",
